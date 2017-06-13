@@ -1,0 +1,7 @@
+<div class="w3-container">
+    <form class="w3-form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'users/form-template.html' %}
+        <button type="submit" class="w3-button w3-black">Register</button>
+    </form>
+</div>

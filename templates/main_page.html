@@ -1,0 +1,14 @@
+<div>
+    {% if user == None %}
+        <div>
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    {% else %}
+        <h1>Hello {{ user.get_full_name }}!!</h1>
+        <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+        </form>
+    {% endif %}
+</div>

@@ -1,0 +1,18 @@
+{% for field in form1 %}
+    <div class="w3-group">
+        <div>
+            <span class="w3-text-red">{{ field.errors }}</span>
+        </div>
+        <label class="w3-label">{{ field.label_tag }}</label>
+        {{ field }}
+    </div>
+{% endfor %}
+{% for field in form2 %}
+    <div class="w3-group">
+        <div>
+            <span class="w3-text-red">{{ field.errors }}</span>
+        </div>
+        <label class="w3-label">{{ field.label_tag }}</label>
+        {{ field }}
+    </div>
+{% endfor %}
