@@ -20,11 +20,12 @@ class UserFormView(View):
         form1=self.form_class1(request.POST)
         form2 = self.form_class2(request.POST)
 
-        if form1.is_valid():
+        if form1.is_valid() and form2.is_valid():
             user = form1.save(commit=False)
             coder = form2.save(commit=False)
             username = form1.cleaned_data['username']
             password = form1.cleaned_data['password']
+            email = form1.clean_email()
             user.set_password(password)
             user.save()
             coder.user = user
@@ -45,8 +46,7 @@ class MainPageView(View):
     def get(self, request):
         user = None
         if request.user.is_authenticated():
-            user_id =request.user.id
-            user = User.objects.get(id=user_id)
+            user = request.user
         return render(request, self.template_name, {'user': user})
 
 class LoginPageView(View):
@@ -78,10 +78,9 @@ class LogoutPageView(View):
         return redirect('/')
 
 class DetailPageView(View):
+
     template_name ='users/detail.html'
+
     def get(self,request,user):
         userobj = get_object_or_404(User,username=user)
-        args = {
-            'user': userobj
-        }
-        return render(request,self.template_name,args)
+        return render(request,self.template_name,{'user': userobj})
