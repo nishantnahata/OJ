@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import View
 from .modelForms import UserForm, CoderForm
 from django.contrib.auth import authenticate, login
@@ -76,3 +76,12 @@ class LogoutPageView(View):
     def post(self, request):
         logout(request)
         return redirect('/')
+
+class DetailPageView(View):
+    template_name ='users/detail.html'
+    def get(self,request,user):
+        userobj = get_object_or_404(User,username=user)
+        args = {
+            'user': userobj
+        }
+        return render(request,self.template_name,args)

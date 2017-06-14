@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^$', views.MainPageView.as_view(),name='home'),
     url(r'^login/$', views.LoginPageView.as_view(),name='login'),
     url(r'^logout/$', views.LogoutPageView.as_view(), name='logout'),
+    # profile url
+    url(r'^profile/(?P<user>[.\-_\w]+)/',views.DetailPageView.as_view(),name='detail'),
 ]
 
 if settings.DEBUG:
