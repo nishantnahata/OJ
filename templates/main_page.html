@@ -6,6 +6,8 @@
         </div>
     {% else %}
         Hello <a href="{% url 'users:detail' user %}">{{ user.get_full_name }}!!</a>
+        <!-- link for editing profile page -->
+        <a href="{% url 'users:update' user %}">edit profile</a>
         <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <button type="submit">Logout</button>
