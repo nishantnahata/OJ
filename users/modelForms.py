@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import Coder
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
@@ -16,8 +17,11 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError(u'Email addresses must be unique.')
         return email
 
+
 class CoderForm(forms.ModelForm):
 
     class Meta:
         model = Coder
         fields = ['institution','city','state','resume']
+
+
