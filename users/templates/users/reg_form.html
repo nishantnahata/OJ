@@ -1,3 +1,5 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/w3.css' %}"/>
 <div class="w3-container">
     <form class="w3-form" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}

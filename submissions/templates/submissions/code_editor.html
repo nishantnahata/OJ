@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'django_ace/widget.css' %}"/>
+<script src="{% static 'django_ace/widget.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/ace.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/theme-twilight.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-c_cpp.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-java.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-python.js' %}" type="text/javascript" charset="utf-8"></script>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <select name="lang" type="submit">
+        <option value="None"> - </option>
+        {% for lang in langs %}
+            <option value="{{ lang }}">{{ lang }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Select</button>
+</form>
+<form action="" method="post">
+    <div>
+        {{ form.code }}
+        <button type="submit">Submit</button>
+    </div>
+</form>
+

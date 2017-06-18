@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-from users import views
+from users.views import MainPageView, UserFormView, LoginPageView, LogoutPageView
+from submissions.views import EditorView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,21 +24,28 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     #Home page url
-    url(r'^$', views.MainPageView.as_view(),name='home'),
+    url(r'^$', MainPageView.as_view(),name='home'),
 
     # user registration url
-    url(r'^register/$', views.UserFormView.as_view(),name='register'),
+    url(r'^register/$', UserFormView.as_view(),name='register'),
 
     #Login page url
-    url(r'^login/$', views.LoginPageView.as_view(),name='login'),
+    url(r'^login/$', LoginPageView.as_view(),name='login'),
 
     #Logout page url
-    url(r'^logout/$', views.LogoutPageView.as_view(), name='logout'),
+    url(r'^logout/$', LogoutPageView.as_view(), name='logout'),
 
     # users app
     url(r'^users/',include('users.urls')),
+
+    #submissions app
+    url(r'^submissions/',include('submissions.urls')),
+
+    #ide
+    url(r'^ide/$', EditorView.as_view(), name='ide'),
+
 ]
 
 if settings.DEBUG:
-    urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

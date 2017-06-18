@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'django_ace',
     'rest_framework',
+    'submissions.apps.SubmissionsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

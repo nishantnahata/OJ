@@ -7,6 +7,7 @@ class Coder(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     resume = models.FileField(null=True,blank=True)
+    lang = models.CharField(max_length=10, default='cpp')
 
     def __unicode__(self):
         return u"%s" % self.user
