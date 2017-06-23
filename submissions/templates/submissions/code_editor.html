@@ -9,17 +9,16 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    <select name="lang" type="submit">
-        <option value="None"> - </option>
-        {% for lang in langs %}
-            <option value="{{ lang }}">{{ lang }}</option>
-        {% endfor %}
-    </select>
-    <button type="submit">Select</button>
+    {{ form2.lang }}
+    <button type="submit" name = "lang_select">Select</button>
 </form>
+<div>
+    Language : {{ lang }}
+</div>
 <form action="" method="post">
+    {% csrf_token %}
     <div>
-        {{ form.code }}
+        {{ form1.code }}
         <button type="submit">Submit</button>
     </div>
 </form>
