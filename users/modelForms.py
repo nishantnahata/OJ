@@ -21,7 +21,4 @@ class CoderForm(forms.ModelForm):
 
     class Meta:
         model = Coder
-        fields = ['institution','city','state','resume']
-
-
-
+        fields = ['institution','city','state','resume','lang']
