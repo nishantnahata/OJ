@@ -1,6 +1,14 @@
 from django.contrib.auth.models import User
 from django import forms
 from .models import Coder
+LANG_CHOICES = (
+    ('-', '-'),
+    ('cpp', 'cpp'),
+    ('c', 'c'),
+    ('java', 'java'),
+    ('python', 'python'),
+)
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -18,6 +26,7 @@ class UserForm(forms.ModelForm):
 
 
 class CoderForm(forms.ModelForm):
+    lang = forms.ChoiceField(choices=LANG_CHOICES)
 
     class Meta:
         model = Coder

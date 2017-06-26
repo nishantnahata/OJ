@@ -19,6 +19,16 @@
     {% csrf_token %}
     <div>
         {{ form1.code }}
+        {% if errors %}
+            <pre>
+                <code>
+                    <p>Syntax Error : </p><br>
+                    {{ errors }}
+                </code>
+            </pre><br>
+        {% endif %}
+        Input :<br>
+        {{ form1.inp }}<br>
         <button type="submit">Submit</button>
     </div>
 </form>

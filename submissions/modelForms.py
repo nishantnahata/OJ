@@ -21,12 +21,12 @@ LANG_CHOICES = (
 
 class EditorForm(forms.Form):
     code = forms.CharField()
+    inp = forms.CharField(widget=forms.Textarea)
 
     def __init__(self, lang='cpp', *args, **kwargs):
         super(EditorForm,self).__init__(*args, **kwargs)
         self.fields['code'] = forms.CharField(widget=AceWidget(mode=mode_map[lang],
                                                                theme='daylight'))
-
 
 
 class LangSelect(forms.Form):
