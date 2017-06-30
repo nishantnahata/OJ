@@ -1,6 +1,8 @@
 import os
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from OJ.settings import MEDIA_ROOT
@@ -10,7 +12,7 @@ from .models import Submission, Test
 
 lang = str(None)
 
-
+@method_decorator(login_required(login_url='/'), name='dispatch')
 class EditorView(View):
 
     template_name = 'submissions/code_editor.html'
@@ -25,8 +27,6 @@ class EditorView(View):
 
     def get(self, request):
         global lang
-        if request.user.is_anonymous:
-            return redirect('/')
         if lang == 'None':
             lang = request.user.coder.lang
         # print(lang)
@@ -78,7 +78,8 @@ class EditorView(View):
             submission.save()
             test = open(MEDIA_ROOT + '/test/x_tmp.txt', "w+")
             test.write(i_content)
-            result = submission.run(test)
+            result, toe = submission.run(test)
+            print('Elapsed seconds: '+toe)
             os.remove(MEDIA_ROOT + '/test/x_tmp.txt')
             return redirect('/')
 

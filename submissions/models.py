@@ -1,7 +1,11 @@
 import os
 import ntpath
+import signal
 import subprocess
 
+import resource
+
+from time import monotonic as timer
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -31,7 +35,6 @@ class Submission(models.Model):
     }
 
     def get_file_name(self):
-        os.chdir(MEDIA_ROOT)
         return ntpath.basename(self.code.path)
 
     def get_obj_file_name(self):
@@ -70,15 +73,16 @@ class Submission(models.Model):
                 self.lang != 'python':
             os.remove(name)
 
-        if os.path.isfile(file_name):
+        if os.path.isfile(MEDIA_ROOT+'/'+file_name):
             cmd = self.get_compile_command(name, file_name)
             print(cmd)
-            r = subprocess.run(cmd, stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+            r = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE, cwd=MEDIA_ROOT)
             print("COMPILATION SUCCESSFUL!!")
-            if r.stderr:
-                print(r.stderr)
-                return r.stderr
+            stderr = r.communicate()[1]
+            if stderr:
+                print(stderr)
+                return stderr
             else:
                 return 200
         else:
@@ -87,21 +91,26 @@ class Submission(models.Model):
     def run(self, test):
         name = self.get_obj_file_name()
         cmd = self.get_run_command(name)
-        with open(test.name, 'rb') as f:
-            data = f.read().replace(b'\n', b'')
-            print(timeout)
+        start = timer()
+        env = os.environ.copy()
+        print(resource.RLIM_INFINITY)
+        r = subprocess.Popen(cmd, shell=True,
+                             stdin=test, stderr=subprocess.PIPE,
+                             stdout=subprocess.PIPE, bufsize=4*1024,
+                             cwd=MEDIA_ROOT, preexec_fn=os.setsid,
+                             env=env)
         try:
-            r = subprocess.run(cmd, timeout=timeout, shell=True,
-                               input=data, stderr=subprocess.PIPE,
-                               stdout=subprocess.PIPE, check=True)
+            stdout, stderr = r.communicate(timeout=timeout)
+            print(stderr)
         except subprocess.TimeoutExpired as e:
-            return e
-        except subprocess.CalledProcessError as e:
-            return e
-        if r.stderr:
-            print(self.lang + str(r.stderr, "utf-8"))
-        print(str(r.stdout, encoding="utf-8"))
-        return r
+            print("Timeout expired")
+            os.killpg(r.pid, signal.SIGINT)
+            r.returncode = 124
+        print(r.returncode)
+        if self.lang != 'python':
+            os.remove(name)
+        print('Elapsed seconds: {:.2f}'.format(timer() - start))
+        return r, '{:.2f}'.format(timer() - start)
 
 
 class Test(models.Model):
