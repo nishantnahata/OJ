@@ -62,7 +62,8 @@ class EditorView(View):
             # Take the form data in a file and store it in Submission model
             # print(lang)
             content = ContentFile(request.POST['code'])
-            i_content = request.POST['inp']
+            test = request.POST['inp']
+            print('INP :'+test)
             submission = Submission(user=request.user, lang=lang)
             submission.code.save('x' + self.lang_map[lang],
                                  content, save=False)
@@ -76,11 +77,8 @@ class EditorView(View):
                               {'form1': form1, 'form2': form2, 'lang': lang,
                                'errors': r})
             submission.save()
-            test = open(MEDIA_ROOT + '/test/x_tmp.txt', "w+")
-            test.write(i_content)
             result, toe = submission.run(test)
             print('Elapsed seconds: '+toe)
-            os.remove(MEDIA_ROOT + '/test/x_tmp.txt')
             return redirect('/')
 
 
