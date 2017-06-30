@@ -19,6 +19,7 @@ from users.views import MainPageView, UserFormView, LoginPageView, LogoutPageVie
 from submissions.views import EditorView
 from django.conf import settings
 from django.conf.urls.static import static
+from blog.views import BlogDisplay
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -43,6 +44,9 @@ urlpatterns = [
 
     #ide
     url(r'^ide/$', EditorView.as_view(), name='ide'),
+
+    #blog
+    url(r'^blog/$',BlogDisplay.as_view(),name='blog'),
 
 ]
 

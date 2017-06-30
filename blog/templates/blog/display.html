@@ -1,0 +1,13 @@
+{% for post in posts %}
+    <p>{{post.user.username}} : {{post.data}}</p>
+{%endfor%}
+
+{% if request.user.is_authenticated %}
+    <form action="" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" name = "posts">
+            Post On Blog
+        </button>
+    </form>
+{% endif %}

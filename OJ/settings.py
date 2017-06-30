@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'django_ace',
     'rest_framework',
+    'blog',
     'submissions.apps.SubmissionsConfig',
 ]
 
