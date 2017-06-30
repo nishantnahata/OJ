@@ -92,23 +92,21 @@ class Submission(models.Model):
         name = self.get_obj_file_name()
         cmd = self.get_run_command(name)
         start = timer()
-        env = os.environ.copy()
-        print(resource.RLIM_INFINITY)
         r = subprocess.Popen(cmd, shell=True,
                              stdin=test, stderr=subprocess.PIPE,
                              stdout=subprocess.PIPE, bufsize=4*1024,
-                             cwd=MEDIA_ROOT, preexec_fn=os.setsid,
-                             env=env)
+                             cwd=MEDIA_ROOT, preexec_fn=os.setsid)
         try:
             stdout, stderr = r.communicate(timeout=timeout)
-            print(stderr)
+            print('STDOUT : '+ str(stdout, "utf-8"))
+            print('STDERR : ' + str(stderr, "utf-8"))
         except subprocess.TimeoutExpired as e:
             print("Timeout expired")
             os.killpg(r.pid, signal.SIGINT)
             r.returncode = 124
-        print(r.returncode)
+        print('Return Code : ' + str(r.returncode))
         if self.lang != 'python':
-            os.remove(name)
+            os.remove(MEDIA_ROOT+'/'+name)
         print('Elapsed seconds: {:.2f}'.format(timer() - start))
         return r, '{:.2f}'.format(timer() - start)
 
