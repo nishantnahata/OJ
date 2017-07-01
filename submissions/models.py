@@ -3,12 +3,10 @@ import ntpath
 import signal
 import subprocess
 
-import resource
-
 from time import monotonic as timer
 from django.core.exceptions import ValidationError
 from django.db import models
-
+from problemset.models import Problem
 from OJ.settings import MEDIA_ROOT
 from langs import langs
 from django.contrib.auth.models import User
@@ -21,12 +19,38 @@ def validate_lang(value):
 # For now timeout is kept constant... Later it will be updated.
 timeout = 2
 
+def compare(a, b):
+    return [c for c in a if(c.isprintable() and (not c.isspace()))] == \
+           [c for c in b if(c.isprintable() and (not c.isspace()))]
+
+
+def get_status(returncode, stdin = None, stdout = None):
+    if returncode == 124:
+        return 'TLE'
+    if returncode != 0:
+        return 'Runtime Error'
+    if stdin is None:
+        return 'Success'
+    if compare(stdin, stdout):
+        return 'Accepted'
+    return 'Wrong Answer'
+
+
+class Result:
+
+    def __init__(self, stdin, stdout, stderr, returncode, toe):
+        self.stdout = str(stdout, "utf-8")
+        self.stderr = str(stderr, "utf-8")
+        self.status = get_status(returncode, stdin, self.stdout)
+        self.toe = toe
+
 
 class Submission(models.Model):
     lang = models.CharField(validators=[validate_lang], max_length=10, default='cpp')
     code = models.FileField(null=True)
     status = models.CharField(max_length=10, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     lang_map = {
         'c': '.c',
         'cpp': '.cpp',
@@ -88,16 +112,18 @@ class Submission(models.Model):
         else:
             return 404
 
-    def run(self, test):
+    def run(self, inp, out=None):
         name = self.get_obj_file_name()
         cmd = self.get_run_command(name)
         start = timer()
+        stdout = b''
+        stderr = b''
         r = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              stdout=subprocess.PIPE, bufsize=4*1024,
                              cwd=MEDIA_ROOT, preexec_fn=os.setsid)
         try:
-            stdout, stderr = r.communicate(timeout=timeout, input=test.encode())
+            stdout, stderr = r.communicate(timeout=timeout, input=inp.encode())
             print('STDOUT : '+ str(stdout, "utf-8"))
             print('STDERR : ' + str(stderr, "utf-8"))
         except subprocess.TimeoutExpired as e:
@@ -108,9 +134,6 @@ class Submission(models.Model):
         if self.lang != 'python':
             os.remove(MEDIA_ROOT+'/'+name)
         print('Elapsed seconds: {:.2f}'.format(timer() - start))
-        return r, '{:.2f}'.format(timer() - start)
+        return Result(out, stdout, stderr, r.returncode,
+                      '{:.2f}'.format(timer() - start)+'s')
 
-
-class Test(models.Model):
-    inp = models.FileField(upload_to='test/', null=True)
-    out = models.FileField(upload_to='test/', null=True)

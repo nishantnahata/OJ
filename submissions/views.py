@@ -1,5 +1,3 @@
-import os
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
@@ -8,9 +6,14 @@ from django.views import View
 from OJ.settings import MEDIA_ROOT
 from .modelForms import EditorForm, LangSelect
 from django.core.files.base import ContentFile
-from .models import Submission, Test
+from .models import Submission
 
 lang = str(None)
+
+
+def get_display_string(s):
+    return s.replace('\n', '<br>')
+
 
 @method_decorator(login_required(login_url='/'), name='dispatch')
 class EditorView(View):
@@ -76,10 +79,16 @@ class EditorView(View):
                 return render(request, self.template_name,
                               {'form1': form1, 'form2': form2, 'lang': lang,
                                'errors': r})
-            submission.save()
-            result, toe = submission.run(test)
-            print('Elapsed seconds: '+toe)
-            return redirect('/')
+            result = submission.run(test)
+            result.stdout.encode('ascii', 'xmlcharrefreplace')
+            result.stdout = get_display_string(result.stdout)
+            result.stderr.encode('ascii', 'xmlcharrefreplace')
+            result.stderr = get_display_string(result.stderr)
+            submission.code.delete(save=False)
+            form2 = self.form_class2(None)
+            return render(request, self.template_name,
+                          {'form1': form1, 'form2': form2, 'lang': lang,
+                           'result': result})
 
 
 """

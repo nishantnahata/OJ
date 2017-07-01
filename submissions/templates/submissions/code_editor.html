@@ -29,6 +29,16 @@
         {% endif %}
         Input :<br>
         {{ form1.inp }}<br>
+        {% if result %}
+            <p>Elapsed Time : {{ result.toe }}</p>
+            <p>{{ result.status }}</p>
+            {% if result.stderr %}
+                <p>{{ result.stderr | safe }}</p>
+            {% else %}
+                <p>Output :</p>
+                <p>{{ result.stdout | safe }}</p>
+            {% endif %}
+        {% endif %}
         <button type="submit">Submit</button>
     </div>
 </form>

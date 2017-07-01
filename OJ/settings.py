@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'blog',
     'submissions.apps.SubmissionsConfig',
+    'problemset.apps.ProblemsetConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
