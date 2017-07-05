@@ -19,6 +19,7 @@ def validate_lang(value):
 # For now timeout is kept constant... Later it will be updated.
 timeout = 2
 
+
 def compare(a, b):
     return [c for c in a if(c.isprintable() and (not c.isspace()))] == \
            [c for c in b if(c.isprintable() and (not c.isspace()))]
@@ -49,8 +50,10 @@ class Submission(models.Model):
     lang = models.CharField(validators=[validate_lang], max_length=10, default='cpp')
     code = models.FileField(null=True)
     status = models.CharField(max_length=10, blank=True)
+    toe = models.CharField(max_length=10, default='1.00')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
     lang_map = {
         'c': '.c',
         'cpp': '.cpp',

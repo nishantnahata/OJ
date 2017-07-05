@@ -87,8 +87,8 @@ class DetailPageView(View):
 
     template_name = 'users/detail.html'
 
-    def get(self,request,user):
-        userobj = get_object_or_404(User,username=user)
+    def get(self,request, user):
+        userobj = get_object_or_404(User, username=user)
         return render(request,self.template_name,{'user': userobj})
 
 

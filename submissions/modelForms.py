@@ -23,10 +23,17 @@ class EditorForm(forms.Form):
     code = forms.CharField()
     inp = forms.CharField(widget=forms.Textarea)
 
-    def __init__(self, lang='cpp', *args, **kwargs):
+    def __init__(self, lang='cpp', disable=False,
+                 code=None, theme='daylight', *args, **kwargs):
         super(EditorForm,self).__init__(*args, **kwargs)
-        self.fields['code'] = forms.CharField(widget=AceWidget(mode=mode_map[lang],
-                                                               theme='daylight'))
+        wg = AceWidget(mode=mode_map[lang],
+                       theme=theme,
+                       attrs={'readonly':'readonly'})
+        # TODO: Make the code field uneditable.
+        self.fields['code'] = forms.CharField(
+            widget=wg, disabled=disable,
+            initial=code,
+        )
 
 
 class LangSelect(forms.Form):

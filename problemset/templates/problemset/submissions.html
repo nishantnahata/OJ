@@ -1,0 +1,22 @@
+<table>
+    <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Status</th>
+        <th>Time</th>
+        <th>Language</th>
+        <th>Submitted on</th>
+    </tr>
+    {% for submission in submissions %}
+        <tr>
+            <td><a href="{% url 'submissions:submission' submission.id %}">
+                {{ submission.id }}</a></td>
+            <td><a href="{% url 'users:detail' submission.user.username %}">
+                {{ submission.user.username }}</a></td>
+            <td>{{ submission.status }}</td>
+            <td>{{ submission.toe }}s</td>
+            <td>{{ submission.lang }}</td>
+            <td>{{ submission.created_at }}</td>
+        </tr>
+    {% endfor %}
+</table>

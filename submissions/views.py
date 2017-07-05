@@ -1,9 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
-
-from OJ.settings import MEDIA_ROOT
 from .modelForms import EditorForm, LangSelect
 from django.core.files.base import ContentFile
 from .models import Submission
@@ -102,3 +100,16 @@ int main()
     return 0;
 }
 """
+
+
+class SubmissionView(View):
+    template_name = 'submissions/submission_page.html'
+    form_class = EditorForm
+
+    def get(self, request, sid):
+        submission = get_object_or_404(Submission, pk=sid)
+        with open(submission.code.path, 'r') as f:
+            code = f.read().replace('\n\r', '')
+        form = self.form_class(code=code, disable=True,
+                               lang=submission.lang, theme='twilight')
+        return render(request, self.template_name, {'form': form})

@@ -48,6 +48,9 @@ urlpatterns = [
     #blog
     url(r'^blog/$',BlogDisplay.as_view(),name='blog'),
 
+    #problemset
+    url(r'^problemset/',include('problemset.urls')),
+
 ]
 
 if settings.DEBUG:

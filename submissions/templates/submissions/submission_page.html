@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'django_ace/widget.css' %}"/>
+<script src="{% static 'django_ace/widget.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/ace.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/theme-twilight.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-c_cpp.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-java.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-python.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/snippets/c_cpp.js' %}" type="text/javascript" charset="utf-8"></script>
+
+<pre>
+<code>
+{{ form.code }}
+</code>
+</pre>

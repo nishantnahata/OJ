@@ -1,0 +1,20 @@
+<h3>Problemset</h3>
+<table>
+    <tr>
+        <th>S.No.</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Solved</th>
+    </tr>
+    {% for problem in problemset %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'problemset:problem' problem.id %}">
+                {{ problem.code }}</a></td>
+            <td><a href="{% url 'problemset:problem' problem.id %}">
+                {{ problem.name }}</a></td>
+            <td><a href="{% url 'problemset:problem-status' problem.id %}">
+                {{ problem.user_count }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
