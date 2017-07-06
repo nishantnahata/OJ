@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
-from langs import langs
+from constants import langs
 
 def validate_lang(value):
     if value not in langs:

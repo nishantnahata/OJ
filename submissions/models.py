@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from problemset.models import Problem
 from OJ.settings import MEDIA_ROOT
-from langs import langs
+from constants import langs
 from django.contrib.auth.models import User
 
 
@@ -25,24 +25,20 @@ def compare(a, b):
            [c for c in b if(c.isprintable() and (not c.isspace()))]
 
 
-def get_status(returncode, stdin = None, stdout = None):
+def get_status(returncode):
     if returncode == 124:
-        return 'TLE'
+        return 0
     if returncode != 0:
-        return 'Runtime Error'
-    if stdin is None:
-        return 'Success'
-    if compare(stdin, stdout):
-        return 'Accepted'
-    return 'Wrong Answer'
+        return 1
+    return 2
 
 
 class Result:
 
-    def __init__(self, stdin, stdout, stderr, returncode, toe):
+    def __init__(self, toe, status, stdout=None, stderr=None):
         self.stdout = str(stdout, "utf-8")
         self.stderr = str(stderr, "utf-8")
-        self.status = get_status(returncode, stdin, self.stdout)
+        self.status = get_status(status)
         self.toe = toe
 
 
@@ -115,7 +111,7 @@ class Submission(models.Model):
         else:
             return 404
 
-    def run(self, inp, out=None):
+    def run(self, inp=None):
         name = self.get_obj_file_name()
         cmd = self.get_run_command(name)
         start = timer()
@@ -126,8 +122,11 @@ class Submission(models.Model):
                              stdout=subprocess.PIPE, bufsize=4*1024,
                              cwd=MEDIA_ROOT, preexec_fn=os.setsid)
         try:
-            stdout, stderr = r.communicate(timeout=timeout, input=inp.encode())
-            print('STDOUT : '+ str(stdout, "utf-8"))
+            if inp is not None:
+                stdout, stderr = r.communicate(timeout=timeout, input=inp.encode())
+            else:
+                stdout, stderr = r.communicate(timeout=timeout)
+            print('STDOUT : ' + str(stdout, "utf-8"))
             print('STDERR : ' + str(stderr, "utf-8"))
         except subprocess.TimeoutExpired as e:
             print("Timeout expired")
@@ -137,6 +136,5 @@ class Submission(models.Model):
         if self.lang != 'python':
             os.remove(MEDIA_ROOT+'/'+name)
         print('Elapsed seconds: {:.2f}'.format(timer() - start))
-        return Result(out, stdout, stderr, r.returncode,
-                      '{:.2f}'.format(timer() - start)+'s')
+        return Result(timer() - start, r.returncode, stdout, stderr)
 

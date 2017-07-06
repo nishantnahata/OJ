@@ -1,3 +1,18 @@
+{% extends 'base.html' %}
+{% block head %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'django_ace/widget.css' %}"/>
+<script src="{% static 'django_ace/widget.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/ace.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/theme-twilight.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-c_cpp.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-java.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/mode-python.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/snippets/c_cpp.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/snippets/java.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'django_ace/ace/snippets/python.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+{% block body %}
 <h3>{{ problem.name }}</h3>
 <h5>{{ problem.code }}</h5>
 <h6>Time Limit : {{ problem.tl }}sec</h6>
@@ -7,3 +22,38 @@
 <p>{{ problem.input|safe }}</p>
 <h4>Output</h4>
 <p>{{ problem.output|safe }}</p>
+<h4>Constraints</h4>
+<p>{{ problem.constraints|safe }}</p>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form2.lang }}
+    <button type="submit" name = "lang_select">Select</button>
+</form>
+<div>
+    Language : {{ lang }}
+</div>
+<form action="" method="post">
+    {% csrf_token %}
+    <div>
+        {{ form1.code }}
+        {% if errors %}
+            <pre>
+                <code>
+                    <p>Syntax Error : </p><br>
+                    {{ errors }}
+                </code>
+            </pre><br>
+        {% endif %}
+        {% if result %}
+            <p>Elapsed Time : {{ result.toe }}</p>
+            <p>{{ result.status }}</p>
+            {% if result.stderr %}
+                {% autoescape on %}
+                    <p>{{ result.stderr | linebreaksbr }}</p>
+                {% endautoescape %}
+            {% endif %}
+        {% endif %}
+        <button type="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}

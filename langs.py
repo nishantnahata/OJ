@@ -1,1 +1,0 @@
-langs = ['cpp', 'c', 'java', 'python']

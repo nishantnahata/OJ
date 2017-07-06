@@ -21,7 +21,7 @@ LANG_CHOICES = (
 
 class EditorForm(forms.Form):
     code = forms.CharField()
-    inp = forms.CharField(widget=forms.Textarea)
+    inp = forms.CharField(widget=forms.Textarea, empty_value=True)
 
     def __init__(self, lang='cpp', disable=False,
                  code=None, theme='daylight', *args, **kwargs):

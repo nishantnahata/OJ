@@ -5,12 +5,9 @@ from django.views import View
 from .modelForms import EditorForm, LangSelect
 from django.core.files.base import ContentFile
 from .models import Submission
+from constants import status
 
 lang = str(None)
-
-
-def get_display_string(s):
-    return s.replace('\n', '<br>')
 
 
 @method_decorator(login_required(login_url='/'), name='dispatch')
@@ -78,10 +75,8 @@ class EditorView(View):
                               {'form1': form1, 'form2': form2, 'lang': lang,
                                'errors': r})
             result = submission.run(test)
-            result.stdout.encode('ascii', 'xmlcharrefreplace')
-            result.stdout = get_display_string(result.stdout)
-            result.stderr.encode('ascii', 'xmlcharrefreplace')
-            result.stderr = get_display_string(result.stderr)
+            result.status = status[result.status]
+            result.toe = '{:.2f}'.format(result.toe)
             submission.code.delete(save=False)
             form2 = self.form_class2(None)
             return render(request, self.template_name,
