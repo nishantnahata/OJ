@@ -51,6 +51,10 @@ urlpatterns = [
     #problemset
     url(r'^problemset/',include('problemset.urls')),
 
+    #zinnias blog
+    url(r'^weblog/', include('zinnia.urls')),
+    url(r'^comments/', include('django_comments.urls')),
+
 ]
 
 if settings.DEBUG:

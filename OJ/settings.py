@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'blog',
     'submissions.apps.SubmissionsConfig',
     'problemset.apps.ProblemsetConfig',
+    'zinnia',
+    'tagging',
+    'mptt',
+    'django.contrib.sites',
+    'django_comments',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -69,6 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
+                'zinnia.context_processors.version',
             ],
         },
     },
@@ -124,6 +131,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+SITE_ID = 1
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
