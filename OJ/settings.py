@@ -138,3 +138,6 @@ MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+SUDO_USER = "nishant"
+SUDO_PASSWORD = "nishant1997"

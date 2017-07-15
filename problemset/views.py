@@ -6,7 +6,6 @@ from submissions.modelForms import EditorForm, LangSelect
 from submissions.models import Submission
 from .models import Problem
 from constants import status
-# Create your views here.
 
 
 class ProblemSetView(View):
@@ -14,7 +13,7 @@ class ProblemSetView(View):
 
     # TODO: Show 25 problems per page.
     def get(self, request):
-        problemset = Problem.objects.all()
+        problemset = Problem.objects.all().reverse()
         fields = Problem._meta.get_fields()
         return render(request, self.template_name, {'problemset': problemset,
                                                     'fields': fields})

@@ -10,6 +10,7 @@ from problemset.models import Problem
 from OJ.settings import MEDIA_ROOT
 from constants import langs
 from django.contrib.auth.models import User
+from sandbox import Sandbox
 
 
 def validate_lang(value):
@@ -35,9 +36,8 @@ def get_status(returncode):
 
 class Result:
 
-    def __init__(self, toe, status, stdout=None, stderr=None):
+    def __init__(self, toe, status, stdout=None):
         self.stdout = str(stdout, "utf-8")
-        self.stderr = str(stderr, "utf-8")
         self.status = get_status(status)
         self.toe = toe
 
@@ -76,16 +76,17 @@ class Submission(models.Model):
         elif self.lang == 'cpp':
             return ['g++', '-std=c++14', '-o', name, file_name]
         else:
-            cmd = ['python3', file_name]
-        return cmd
+            return ['python', '-m', 'py_compile', file_name]
 
-    def get_run_command(self, name):
+    def get_run_command(self, name, sandbox):
+        cmd = sandbox.run_sandbox()
         if self.lang == 'java':
-            cmd = 'java ' + name
+            cmd += 'java ' + name
         elif self.lang in ['c', 'cpp']:
-            cmd = './' + name
+            cmd += './' + name
         else:
-            cmd = 'python3 ' + name
+            cmd += 'python3 ' + name
+        print("RUN : "+cmd)
         return cmd
 
     def compile(self):
@@ -113,14 +114,16 @@ class Submission(models.Model):
 
     def run(self, inp=None):
         name = self.get_obj_file_name()
-        cmd = self.get_run_command(name)
+        sandbox = Sandbox()
+        cmd = self.get_run_command(name, sandbox)
         start = timer()
         stdout = b''
         stderr = b''
+        env = os.environ.copy()
         r = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              stdout=subprocess.PIPE, bufsize=4*1024,
-                             cwd=MEDIA_ROOT, preexec_fn=os.setsid)
+                             cwd=MEDIA_ROOT, preexec_fn=os.setsid,env=env)
         try:
             if inp is not None:
                 stdout, stderr = r.communicate(timeout=timeout, input=inp.encode())
@@ -136,5 +139,6 @@ class Submission(models.Model):
         if self.lang != 'python':
             os.remove(MEDIA_ROOT+'/'+name)
         print('Elapsed seconds: {:.2f}'.format(timer() - start))
-        return Result(timer() - start, r.returncode, stdout, stderr)
+        sandbox.delete_sandbox()
+        return Result(timer() - start, r.returncode, stdout)
 
