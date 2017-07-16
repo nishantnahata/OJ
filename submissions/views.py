@@ -96,6 +96,16 @@ int main()
 }
 """
 
+"""
+import subprocess, os
+
+pid = os.getpid()
+print(os.getgid())
+r = subprocess.Popen("ps -o cgroup "+str(pid), shell=True)
+
+print(r.communicate()[0])
+"""
+
 
 class SubmissionView(View):
     template_name = 'submissions/submission_page.html'
