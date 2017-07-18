@@ -131,6 +131,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 SITE_ID = 1
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -139,5 +143,5 @@ MEDIA_URL = '/media/'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
-SUDO_USER = ""
-SUDO_PASSWORD = ""
+SUDO_USER = "nishant"
+SUDO_PASSWORD = "nishant1997"

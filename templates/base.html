@@ -1,8 +1,135 @@
+{% load staticfiles %}
+
 <head>
-    {% block head %}
-    {% endblock %}
+    <title>Welcome | Programming Competitions</title>
+    <meta charset="utf-8">
+    <meta name="author" content="CODEJ">
+    <meta name="description" content="This is a website made with a touch to help you practice competitive coding and brushen your skills">
+    <meta name="keywords" content="programming,coding,competitive,prizes,question,accepted,wrong answer,time limit">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/headerandtop.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/block_main_pagecss.css' %}">
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    {% block head %}{% endblock %}
 </head>
-<body>
-{% block body %}
-{% endblock %}
-</body>
+
+
+    <header>
+        <nav>
+            <div>
+            <ul class="mainlogo">
+                <li><a href="#" onclick="openslide()">
+                        <svg width="30" height="30">
+                            <path d="M0,5 30,5" stroke="#fff" stroke-width="4"></path>
+                            <path d="M0,14 30,14" stroke="#fff" stroke-width="4"></path>
+                            <path d="M0,23 30,23" stroke="#fff" stroke-width="4"></path>
+                        </svg>
+                    </a></li>
+                <li><a href="#" title="CodeJ" draggable="true"><span>CODEJ</span></a></li>
+            </ul>
+
+            <ul class="navul1">
+                <li><a href="#" title="Problems">Problems</a></li>
+                <li><a href="#"  title="About Us">About Us</a></li>
+                <li><a href="#" title="Contest">Contest</a></li>
+                <li><a href="#" id="special" title="Gift Us">Gift Us</a></li>
+            </ul>
+
+            <ul class="navul2">
+<!--                if not logged in-->
+                {% if user is none %}
+                <li><a href="{% url 'login' %}"  title="Sign In">Sign In</a></li>
+                <li><a href="{% url 'register' %}" id="special" title="Sign Up">Sign Up</a></li>
+                {% else %}
+                <li><a href="{% url 'users:detail' user.username %}" title="Hello">Hello, {{ user.username }}</a></li>
+                <li><form action="{% url 'logout' %}" method="post">{% csrf_token %}<button type="submit" id="special" title="Log Out">Log Out</button></form></li>
+                {% endif %}
+            </ul>
+            </div>
+        </nav>
+
+         <div class="sidebar" id="sidemenu" >
+             <a href="#" id="bcross" onclick="closeslide()">&times;</a>
+             <a href="#" title="Problems">Problems</a>
+             <a href="#" title="About Us">About Us</a>
+             <a href="#" title="Contest">Contest</a>
+             <a href="#" title="Gift Us">Gift Us</a>
+<!--             if not logged in-->
+             {% if user is none %}
+             <a href="#" title="Sign In">Sign In</a>
+             <a href="#" title="Sign Up">Sign Up</a>
+<!--       if logged in      --->
+             {% else %}
+             <a href="#" title="Hello">Hello, Guest</a>
+             {% endif %}
+        </div>
+
+</header>
+{% block body %}{% endblock %}
+
+<footer>
+        <div class="footersocial">
+            <ul>
+                <a href="#"><li><img src="{% static 'images/fb.png' %}" title="Facebook"></li></a>
+                <a href="#"><li><img src="{% static 'images/twitter.png' %}" title="Twitter"></li></a>
+                <a href="#"><li><img src="{% static 'images/youtube.png' %}" title="Youtube"></li></a>
+            </ul>
+        </div>
+        <div class="footerlinks">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Problems</a></li>
+                <li><a href="#">Contest</a></li>
+                <li><a href="#">Sign Up</a></li>
+                <li><a href="#">Sign In</a></li>
+                <li><a href="#">Donate Us</a></li>
+            </ul>
+
+        </div>
+        <span>COPYRIGHT &copy; 2017 CODEJ - CRAFTED WITH&nbsp;<img src="{% static 'images/heart.png' %}"id="heart" title="love">&nbsp;&nbsp;--By CODEJ</span>
+
+    </footer>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"> </script>
+    <script>
+        window.sr = ScrollReveal();
+         sr.reveal('header nav div ul li', {
+          duration: 2000,
+          origin:'left',
+          distance:'50px',
+        });
+        sr.reveal('.quote', {
+          duration: 2000,
+          origin:'bottom',
+          distance:'50px',
+        });
+        sr.reveal('#introinnerdiv1', {
+          duration: 3000,
+          origin:'left',
+          viewFactor:0.5,
+          distance:'300px',
+        });
+        sr.reveal('#introinnerdiv2', {
+          duration: 3000,
+          origin:'right',
+          viewFactor: 0.5,
+          distance:'300px',
+        });
+
+    </script>
+    <script>
+            function openslide(){
+    document.getElementById('sidemenu').style.width='160px';
+
+}
+function closeslide(){
+    document.getElementById('sidemenu').style.width='0';
+
+}
+</script>

@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'django_ace/widget.css' %}"/>
 <script src="{% static 'django_ace/widget.js' %}" type="text/javascript" charset="utf-8"></script>
@@ -10,7 +12,8 @@
 <script src="{% static 'django_ace/ace/snippets/java.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'django_ace/ace/snippets/python.js' %}" type="text/javascript" charset="utf-8"></script>
 
-<form action="" method="post">
+{% endblock %}
+{% block body %}<form action="" method="post">
     {% csrf_token %}
     {{ form2.lang }}
     <button type="submit" name = "lang_select">Select</button>
@@ -45,4 +48,4 @@
         <button type="submit">Submit</button>
     </div>
 </form>
-
+{% endblock %}

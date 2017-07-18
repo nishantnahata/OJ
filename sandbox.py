@@ -11,9 +11,11 @@ class Sandbox:
         count = id(self)
         cmd = 'echo ' + SUDO_PASSWORD + \
               ' | sudo -S cgcreate -g cpu,memory,blkio,devices,freezer:/sandbox_' + \
-              str(count) + ';\n' + 'cgset -r cpu.cfs_period_us=100000 -r ' \
-                                   'cpu.cfs_quota_us=1000 sandbox_' + str(count) + ';\n' + \
-              'cgset -r memory.limit_in_bytes=256M sandbox_' + str(count) + ';\n'
+              str(count) + ';\n' + \
+              'sudo cgset -r memory.limit_in_bytes=256M sandbox_' + str(count) + ';\n' \
+              'sudo cgset -r memory.soft_limit_in_bytes=256M sandbox_' + str(count) + ';\n' \
+              'sudo cgset -r memory.kmem.limit_in_bytes=256M sandbox_' + str(count) + ';\n' \
+              'sudo cgset -r memory.memsw.limit_in_bytes=256M sandbox_' + str(count) + ';\n'
         subprocess.Popen(cmd, shell=True)
         print("CREATE : "+cmd)
         return

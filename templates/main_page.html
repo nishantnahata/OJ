@@ -1,3 +1,34 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block body %}
+    <section class="middleimage">
+
+
+    </section>
+
+    <section class="quote">
+        <h1>Opportunities are not offered. They must be wrested and worked for.<br> And this calls for perseverance... and courage.<br>-Indira Gandhi</h1>
+    </section>
+
+    <section class="introsection">
+        <div class="introdiv">
+            <div id="introinnerdiv1">
+                <img src="{% static 'images/hack_2.png' %}"><br>
+                <h2>Problems</h2>
+                <p>Try your hand at one of our many practice problems. Practice and prepare yourself for the multiple programming challenges.</p><br>
+                <a href="#">Practice Now</a>
+            </div>
+            <div id="introinnerdiv2">
+                <img src="{% static 'images/hack_1.png' %}"><br>
+                <h2>Contests</h2>
+                <p>Here is where you can show off your computer programming skills.Take part in contest and improve your skills and test yourself under pressure.</p><br>
+                <a href="#">Compete Now</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% comment %}
 <div>
     {% if user == None %}
         <div>
@@ -14,3 +45,4 @@
         </form>
     {% endif %}
 </div>
+{% endcomment %}
