@@ -30,7 +30,7 @@
             </ul>
 
             <ul class="navul1">
-                <li><a href="#" title="Problems">Problems</a></li>
+                <li><a href="{% url 'problemset:problemset' %}" title="Problems">Problems</a></li>
                 <li><a href="#"  title="About Us">About Us</a></li>
                 <li><a href="#" title="Contest">Contest</a></li>
                 <li><a href="#" id="special" title="Gift Us">Gift Us</a></li>
@@ -51,17 +51,17 @@
 
          <div class="sidebar" id="sidemenu" >
              <a href="#" id="bcross" onclick="closeslide()">&times;</a>
-             <a href="#" title="Problems">Problems</a>
+             <a href="{% url 'problemset:problemset' %}" title="Problems">Problems</a>
              <a href="#" title="About Us">About Us</a>
              <a href="#" title="Contest">Contest</a>
              <a href="#" title="Gift Us">Gift Us</a>
 <!--             if not logged in-->
              {% if user is none %}
-             <a href="#" title="Sign In">Sign In</a>
-             <a href="#" title="Sign Up">Sign Up</a>
-<!--       if logged in      --->
+             <a href="{% url 'login' %}" title="Sign In">Sign In</a>
+             <a href="{% url 'register' %}" title="Sign Up">Sign Up</a>
+<!--       if logged in-->
              {% else %}
-             <a href="#" title="Hello">Hello, Guest</a>
+             <a href="{% url 'users:detail' user.username %}" title="Hello">Hello, Guest</a>
              {% endif %}
         </div>
 
@@ -78,12 +78,12 @@
         </div>
         <div class="footerlinks">
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="#">About Us</a></li>
-                <li><a href="#">Problems</a></li>
+                <li><a href="{% url 'problemset:problemset' %}">Problems</a></li>
                 <li><a href="#">Contest</a></li>
-                <li><a href="#">Sign Up</a></li>
-                <li><a href="#">Sign In</a></li>
+                <li><a href="{% url 'register' %}">Sign Up</a></li>
+                <li><a href="{% url 'login' %}">Sign In</a></li>
                 <li><a href="#">Donate Us</a></li>
             </ul>
 

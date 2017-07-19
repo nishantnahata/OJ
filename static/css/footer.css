@@ -1,0 +1,37 @@
+footer{
+    background-color:#242E33;
+    min-height: 220px;
+    color: white;
+    text-align: center;
+}
+
+#heart{
+    width:13px;
+    height:13px ;
+}
+
+footer .footersocial ul,footer .footerlinks ul{
+    list-style: none;
+}
+footer .footersocial ul li{
+
+    padding: 10px;
+    display: inline;
+}
+
+footer .footersocial ul a li img{
+    margin-top: 10px;
+    width:20px ;
+    height:20px ;
+}
+footer span{
+    font-family: cursive;
+}
+footer .footerlinks ul li a{
+    color:white;
+    padding: 5px;
+    text-decoration: none;
+}
+footer .footerlinks ul li a:hover{
+    color:#a4a4a4;
+}

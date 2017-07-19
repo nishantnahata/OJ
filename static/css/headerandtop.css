@@ -1,0 +1,132 @@
+body{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: cursive,acumin-pro, "Helvetica Neue", Helvetica, Arial, メイリオ, Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro W3", osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif,cursive;
+    line-height: 1.3;
+    overflow-x: hidden;
+}
+
+/*-------------*/
+header nav div{
+    position:fixed;
+    top:0;
+    z-index: 1039;
+    background-color: black; !important
+    height: 60px;
+    line-height: 60px;
+    width: 100%;
+    opacity: 1;
+}
+header nav ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+header nav ul li{
+    display: inline;
+}
+header nav a{
+    text-decoration: none;
+    color: #fff;
+    padding:10px;
+    font-weight: 700;
+    color:#a4a4a4;
+}
+header nav a:hover{
+    color:white;
+}
+.navul1{
+    width: 45%;
+    float: left;
+
+}
+.navul2{
+    width: 35%;
+    float: left;
+}
+.mainlogo{
+    width: 20%;
+    float:left;
+}
+.mainlogo a{
+    font-family:cursive;
+    font-size: 22px;
+    padding: 12px;
+    font-weight: 800;
+    color:#fff;
+}
+#special{
+    background-color: #0057ff;
+    border-radius: 40px;
+    color: #fff;
+}
+#special:hover,button:hover{
+    background-color:#0943b3;
+}
+header nav div ul li a svg{
+    margin: 3px;
+    vertical-align: middle;
+}
+button{
+    border:0;
+    padding: 10px;
+    font-family:cursive;
+    font-weight: 800;
+    font-size: 1.02em;
+}
+@media(max-width:840px)
+{
+    .navul1,.navul2{
+        width: 0;
+        display: none;
+    }
+    .mainlogo{
+        width:100%;
+        text-align: left;
+    }
+    .mainlogo span{
+        margin-left: 35%;
+        font-size: 1.1em;
+    }
+
+}
+/*----*/
+
+.sidebar{
+    background-color: #111;
+    height:100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity:0.95;
+    transition:0.5s;
+    padding-top:60px;
+    overflow-x: hidden;
+    z-index: 1039;
+}
+
+.sidebar a{
+    display: block;
+    color: #ccc;
+    font-size:18px;
+    text-decoration: none;
+    padding:10px 10px 10px 30px;
+}
+
+.sidebar a:hover{
+    color:#fff;
+}
+
+#bcross{
+    position: absolute;
+    top:0;
+    right:22px;
+    font-size: 36px;
+}
+
+form{
+    display: inline;
+}
