@@ -16,7 +16,7 @@
                 <img src="{% static 'images/hack_2.png' %}"><br>
                 <h2>Problems</h2>
                 <p>Try your hand at one of our many practice problems. Practice and prepare yourself for the multiple programming challenges.</p><br>
-                <a href="#">Practice Now</a>
+                <a href="{% url 'problemset:problemset' %}">Practice Now</a>
             </div>
             <div id="introinnerdiv2">
                 <img src="{% static 'images/hack_1.png' %}"><br>
@@ -27,22 +27,3 @@
         </div>
     </section>
 {% endblock %}
-
-{% comment %}
-<div>
-    {% if user == None %}
-        <div>
-            <a href="{% url 'register' %}">Register</a>
-            <a href="{% url 'login' %}">Login</a>
-        </div>
-    {% else %}
-        Hello <a href="{% url 'users:detail' user %}">{{ user.get_full_name }}!!</a>
-        <!-- link for editing profile page -->
-        <a href="{% url 'users:update' user %}">edit profile</a>
-        <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-        </form>
-    {% endif %}
-</div>
-{% endcomment %}

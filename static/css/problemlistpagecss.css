@@ -1,0 +1,70 @@
+.wrap_problemlist{
+    background-color:#f4f1f1;
+    width: 70%;
+    overflow-x: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:100px;
+    margin-bottom: 100px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 25px #777777;
+}
+
+.wrap_problemlist .container_problemlist{
+    width: 90%;
+    margin: 20px;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.container_problemlist img{
+    width: 70%;
+    height: 30%;
+    padding:10px;
+    border-radius: 45px;
+}
+.container_problemlist img:hover{
+    opacity: 0.9;
+}
+
+.problemlisttable{
+    width: 70%;
+    text-align: left;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #dfdddc;
+    margin-bottom: 50px;
+}
+
+.problemlisttable #heading{
+    background-color: black;
+    color: white;
+}
+.problemlisttable tr{
+    border: 1px solid #dfdddc;
+    background-color: #fafafa;
+}
+.problemlisttable td,.problemlisttable th{
+    padding: 8px;
+    font-weight: 700;
+}
+.problemlisttable th:hover{
+    color: #dfdddc;
+    text-decoration: underline;
+}
+.problemlisttable td a{
+    text-decoration: none;
+    color: #578fb2;
+    font-weight: 700;
+}
+.problemlisttable td a:hover{
+    text-decoration: underline;
+}
+.problemlisttable #correct{
+    color: green;
+}
+
+.problemlisttable #wrong{
+    color: red;
+}

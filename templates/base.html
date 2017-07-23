@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/headerandtop.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/block_main_pagecss.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/problemlistpagecss.css' %}">
     <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
     {% block head %}{% endblock %}
 </head>
@@ -26,7 +27,7 @@
                             <path d="M0,23 30,23" stroke="#fff" stroke-width="4"></path>
                         </svg>
                     </a></li>
-                <li><a href="#" title="CodeJ" draggable="true"><span>CODEJ</span></a></li>
+                <li><a href="{% url 'home' %}" title="CodeJ" draggable="true"><span>CODEJ</span></a></li>
             </ul>
 
             <ul class="navul1">

@@ -1,20 +1,45 @@
 <h3>Problemset</h3>
-<table>
-    <tr>
-        <th>S.No.</th>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Solved</th>
-    </tr>
-    {% for problem in problemset %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td><a href="{% url 'problemset:problem' problem.id %}">
-                {{ problem.code }}</a></td>
-            <td><a href="{% url 'problemset:problem' problem.id %}">
-                {{ problem.name }}</a></td>
-            <td><a href="{% url 'problemset:problem-status' problem.id %}">
-                {{ problem.user_count }}</a></td>
-        </tr>
-    {% endfor %}
-</table>
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+<section class="wrap_problemlist">
+        <div class="container_problemlist">
+            <img src="{% static 'images/talkcheap.png' %}" title="Code Yourself Out!!">
+            <table class="problemlisttable">
+                <tr id="heading">
+                    <th>Serial No.</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Submissions</th>
+                </tr>
+<!--                YOU HAVE TO LOOP OVER HERE I HAVE ADDED 2 ROWS FOR SAMPLE -->
+                {% for problem in problemset %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'problemset:problem' problem.id %}">
+                                                    {{ problem.code }}</a></td>
+                        <td><a href="{% url 'problemset:problem' problem.id %}">
+                                                    {{ problem.name }}</a></td>
+                        <td><a href="{% url 'problemset:problem-status' problem.id %}">
+                                                {{ problem.user_count }}</a></td>
+                    </tr>
+                {% endfor %}
+                {% comment %}
+                {% with ''|center:40 as range %}
+                {% for x in range %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="#">{{ forloop.counter }}</a></td>
+                        <td><a href="#">Problem {{ forloop.counter }}</a></td>
+                        <td><a href="#">0</a></td>
+                    </tr>
+                {% endfor %}
+                {% endwith %}
+                {% endcomment %}
+            </table>
+
+        </div>
+
+</section>
+{% endblock %}
