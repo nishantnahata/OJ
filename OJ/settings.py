@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'django_comments',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
+    'django.utils.deprecation.MiddlewareMixin',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

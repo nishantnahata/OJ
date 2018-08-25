@@ -48,7 +48,7 @@ class MainPageView(View):
 
     def get(self, request):
         user = None
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             user = request.user
         return render(request, self.template_name, {'user': user})
 
